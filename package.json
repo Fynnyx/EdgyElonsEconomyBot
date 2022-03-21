@@ -1,0 +1,27 @@
+{
+  "name": "edgyelonseconomybot",
+  "version": "1.0.0",
+  "description": "All Bots for the EdgyElons Discord.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fynnyx/EdgyElonsEconomyBot.git"
+  },
+  "author": "Fynnyx, Nico Menzi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Fynnyx/EdgyElonsEconomyBot/issues"
+  },
+  "homepage": "https://github.com/Fynnyx/EdgyElonsEconomyBot#readme",
+  "dependencies": {
+    "@discordjs/builders": "^0.12.0",
+    "@discordjs/rest": "^0.3.0",
+    "discord-api-types": "^0.26.1",
+    "discord.js": "^13.6.0",
+    "dotenv": "^15.0.0",
+    "glob": "^7.2.0"
+  }
+}
