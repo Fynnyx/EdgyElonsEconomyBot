@@ -13,7 +13,7 @@ const client = new Client({
 module.exports = client;
 
 client.slashCommands = new Collection();
-["events", "commands"].forEach(handler => {
+["database", "events", "commands"].forEach(handler => {
 	require(`./handlers/${handler}`)(client);
 });
 
