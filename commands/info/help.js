@@ -3,7 +3,7 @@ const data = require(`${process.cwd()}/properties.json`)
 
 module.exports = {
     name: "help",
-    description: "Get help for the diffrent commands and about the bot.",
+    description: "Get help for the diffrent commands and about the bot.",  
     type: 'CHAT_INPUT',
 
     /**
@@ -16,7 +16,7 @@ module.exports = {
         let helpEmbed = new MessageEmbed()
             .setTitle(` für den ${client.user.tag} -- Help`)
             .setDescription(`JUST THE BOT DESCRIPTION`)
-            .setColor("#00fff2")
+            .setColor(data.style.colors.orange)
             .setTimestamp()
             .setFooter({ text: "By Fynnyx | github.com/Fynnyx"})
             
