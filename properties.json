@@ -1,3 +1,13 @@
 {
-    "guildId": "840237524982956072"
+    "guildId": "840237524982956072",
+    "status": {
+        "type": "WATCHING",
+        "value": "Your money!"
+    },
+    "style": {
+        "colors": {
+            "black": "#000000",
+            "orange": "#802a00"
+        }
+    }
 }
