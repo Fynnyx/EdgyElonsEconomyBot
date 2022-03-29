@@ -4,6 +4,8 @@
   "description": "All Bots for the EdgyElons Discord.",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -24,6 +26,7 @@
     "dotenv": "^15.0.0",
     "glob": "^7.2.0",
     "mysql2": "^2.3.3",
-    "sequelize": "^6.17.0"
+    "sequelize": "^6.17.0",
+    "winston": "^3.6.0"
   }
 }
