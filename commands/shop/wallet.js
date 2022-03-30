@@ -24,23 +24,48 @@ module.exports = {
      */
 
     run: async (client, interaction, args) => {
-        const walletEmbed = new MessageEmbed()
+
+        var user
+        var money
+        var title
+        var desc
 
         if (args[0] === undefined) {
-            const money = await getMoneyFromUser(interaction.user.id)
-            console.log(money);
-                walletEmbed
-                    .setTitle("- Your Wallet -")
-                    .setDescription("With your money you can buy items from the shop.\n*use *`/shop`")
+            user = interaction.user
+            money = await getMoneyFromUser(user.id)
+            title = `- Your Wallet -`
+            desc = `With your money you can buy items in the shop.\n**use **${"`"}/shop${"`"}`
         } else {
-            const money = await getMoneyFromUser(args[0])
-            const user = await client.users.fetch(args[0])
-            console.log(user);
-            console.log(money);
+            user = await client.users.fetch(args[0])
+            money = await getMoneyFromUser(args[0])
+            title = `- Wallet from ${user.tag} -`
+            desc = `With your money you can buy items in the shop.\n**use **${"`"}/shop${"`"}`
+
+
             
-            walletEmbed
-                .setTitle("- Wallet from -")
         }
+        const walletEmbed = new MessageEmbed()
+                .setTitle(title)
+                .setDescription(desc)
+                .setColor(data.style.colors.orange)
+                .setThumbnail(user.displayAvatarURL())
+                .setFields([
+                    {
+                        name: "Fragments",
+                        value: `${money.fragment}`,
+                        inline: true
+                    },
+                    {
+                        name: "Gold",
+                        value: `${money.gold}`,
+                        inline: true
+                    },
+                    {
+                        name: "Silver",
+                        value: `${money.silver}`,
+                        inline: true
+                    },
+                ])
         await interaction.reply({ embeds: [walletEmbed] })
     }
 }

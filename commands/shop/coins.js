@@ -1,10 +1,24 @@
 const { Client, CommandInteraction, MessageEmbed } = require("discord.js")
+const logger = require("../../handlers/logger")
+const { addMoneyToUser, removeMoneyFromUser } = require("../../helpers/dbMoney")
 const data = require(`${process.cwd()}/properties.json`)
 
 const options = [
     {
-        name: "amount",
-        description: "The amount of coins you want to add or remove.",
+        name: "fragments",
+        description: "The amount of fragments you want to add or remove.",
+        type: "NUMBER",
+        required: true,
+    },
+    {
+        name: "gold",
+        description: "The amount of gold you want to add or remove.",
+        type: "NUMBER",
+        required: true,
+    },
+    {
+        name: "silver",
+        description: "The amount of silver you want to add or remove.",
         type: "NUMBER",
         required: true,
     },
@@ -19,6 +33,7 @@ const options = [
 module.exports = {
     name: "coins",
     description: "Give or Remove coins from members.",
+    userPermissions: ["ADMINISTRATOR"],
     type: 'CHAT_INPUT',
     options: [
         {
@@ -42,15 +57,23 @@ module.exports = {
      */
 
     run: async (client, interaction, args) => {
+        try {
+            const userid =interaction.options._hoistedOptions[3].user.id
+            const fragment = interaction.options._hoistedOptions[0].value
+            const gold = interaction.options._hoistedOptions[1].value
+            const silver = interaction.options._hoistedOptions[2].value
 
-        switch (args[0]) {
-            case "add":
-                
-            case "remove":
-
-            default:
+            switch (args[0]) {
+                case "add":
+                    interaction.reply({ content: await addMoneyToUser(userid, { fragment: fragment, gold: gold, silver: silver }), ephemeral: true })
+                    break;
+                case "remove":
+                    interaction.reply({ content: await removeMoneyFromUser(userid, { fragment: fragment, gold: gold, silver: silver }), ephemeral: true })
+                    break;
+                default:
+            }
+        } catch (err) {
+            logger.error(err);
         }
-        console.log(args);
-        await interaction.reply({ content: "Cool" })
     }
 }
