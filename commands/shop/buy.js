@@ -22,6 +22,6 @@ module.exports = {
      */
 
     run: async (client, interaction, args) => {
-        await interaction.reply({ content: data.style.colors.orange })
+        await interaction.reply({ content: data.style.colors.red })
     }
 }

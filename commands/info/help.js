@@ -16,7 +16,7 @@ module.exports = {
         let helpEmbed = new MessageEmbed()
             .setTitle(` für den ${client.user.tag} -- Help`)
             .setDescription(`JUST THE BOT DESCRIPTION`)
-            .setColor(data.style.colors.orange)
+            .setColor(data.style.colors.red)
             .setTimestamp()
             .setFooter({ text: "By Fynnyx | github.com/Fynnyx"})
             

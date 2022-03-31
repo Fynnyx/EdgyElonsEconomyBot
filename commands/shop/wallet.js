@@ -47,7 +47,7 @@ module.exports = {
         const walletEmbed = new MessageEmbed()
                 .setTitle(title)
                 .setDescription(desc)
-                .setColor(data.style.colors.orange)
+                .setColor(data.style.colors.red)
                 .setThumbnail(user.displayAvatarURL())
                 .setFields([
                     {
