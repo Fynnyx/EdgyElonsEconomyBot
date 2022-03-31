@@ -7,10 +7,10 @@ exports.getMoneyFromUser = async (id) => {
     try {
         if (id !== undefined || id !== null && typeof id === "string") {
             if (await doesUserExist(id)) {
-                const money = await db.query(`SELECT fragment, gold, silver FROM user WHERE userid = '${id}'`, { type: db.QueryTypes.SELECT });
+                const money = await db.query(`SELECT redpill, bluepill FROM user WHERE userid = '${id}'`, { type: db.QueryTypes.SELECT });
                 return money[0];
             }
-            return { fragment: 0, gold: 0, silver: 0 }
+            return { redpill: 0, bluepill: 0 };
         }
     } catch (err) {
         logger.error(err);
@@ -22,12 +22,11 @@ exports.addMoneyToUser = async (id, amount) => {
         if (!await doesUserExist(id)) {
             await writeNewUser(id);
         }
-        const money = await db.query(`SELECT fragment, gold, silver FROM user WHERE userid = '${id}'`, { type: db.QueryTypes.SELECT });
-        money[0].fragment += amount.fragment;
-        money[0].gold += amount.gold;
-        money[0].silver += amount.silver;
-        await db.query(`UPDATE user SET fragment = ${money[0].fragment}, gold = ${money[0].gold}, silver = ${money[0].silver} WHERE userid = '${id}'`);
-        return `Added **${amount.fragment}** : __Fragments__, **${amount.gold}** : __Gold__ and **${amount.silver}** : __Silver__ to <@${id}>.`;
+        const money = await db.query(`SELECT redpill, bluepill FROM user WHERE userid = '${id}'`, { type: db.QueryTypes.SELECT });
+        money[0].redpill += amount.redpill;
+        money[0].bluepill += amount.bluepill;
+        await db.query(`UPDATE user SET redpill = ${money[0].redpill}, bluepill = ${money[0].bluepill} WHERE userid = '${id}'`);
+        return `Added **${amount.redpill}** : __Red Pill/s__ and **${amount.bluepill}** : __Blue Pill/s__ to <@${id}>.`;
     } catch (err) {
         logger.error("While adding Money to User " + err);
         return "Something went wrong while adding money to the user.";
@@ -38,14 +37,13 @@ exports.addMoneyToUser = async (id, amount) => {
 exports.removeMoneyFromUser = async (id, amount) => {
     try {
         if (doesUserExist(id)) {
-            const money = await db.query(`SELECT fragment, gold, silver FROM user WHERE userid = '${id}'`, { type: db.QueryTypes.SELECT });
-            money[0].fragment -= amount.fragment;
-            money[0].gold -= amount.gold;
-            money[0].silver -= amount.silver;
-            await db.query(`UPDATE user SET fragment = ${money[0].fragment}, gold = ${money[0].gold}, silver = ${money[0].silver} WHERE userid = '${id}'`);
-            return `Removed **${amount.fragment}** : __Fragments__, **${amount.gold}** : __Gold__ adnd **${amount.silver}** : __Silver__ from <@${id}>.`;
+            const money = await db.query(`SELECT redpill, bluepill FROM user WHERE userid = '${id}'`, { type: db.QueryTypes.SELECT });
+            money[0].redpill -= amount.redpill;
+            money[0].bluepill -= amount.bluepill;
+            await db.query(`UPDATE user SET redpill = ${money[0].redpill}, bluepill = ${money[0].bluepill} WHERE userid = '${id}'`);
+            return `Removed **${amount.redpill}** : __Red Pill/s__ and **${amount.bluepill}** : __Blue Pill/s__ from <@${id}>.`;
         }
-        return `This user has no money to remove 😆.`;
+        return `This user has no pills to remove 😆.`;
     } catch (err) {
         logger.error(err);
         return "Something went wrong while removing money from the user.";

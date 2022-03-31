@@ -51,20 +51,15 @@ module.exports = {
                 .setThumbnail(user.displayAvatarURL())
                 .setFields([
                     {
-                        name: "Fragments",
-                        value: `${money.fragment}`,
+                        name: "Red Pill/s",
+                        value: `${money.redpill}`,
                         inline: true
                     },
                     {
-                        name: "Gold",
-                        value: `${money.gold}`,
+                        name: "Blue Pill/s",
+                        value: `${money.bluepill}`,
                         inline: true
-                    },
-                    {
-                        name: "Silver",
-                        value: `${money.silver}`,
-                        inline: true
-                    },
+                    }
                 ])
         await interaction.reply({ embeds: [walletEmbed] })
     }

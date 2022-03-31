@@ -5,20 +5,14 @@ const data = require(`${process.cwd()}/properties.json`)
 
 const options = [
     {
-        name: "fragments",
-        description: "The amount of fragments you want to add or remove.",
+        name: "redpill",
+        description: "The amount of Red Pills you want to add or remove.",
         type: "NUMBER",
         required: true,
     },
     {
-        name: "gold",
-        description: "The amount of gold you want to add or remove.",
-        type: "NUMBER",
-        required: true,
-    },
-    {
-        name: "silver",
-        description: "The amount of silver you want to add or remove.",
+        name: "bluepill",
+        description: "The amount of blue Pills you want to add or remove.",
         type: "NUMBER",
         required: true,
     },
@@ -58,17 +52,16 @@ module.exports = {
 
     run: async (client, interaction, args) => {
         try {
-            const userid =interaction.options._hoistedOptions[3].user.id
-            const fragment = interaction.options._hoistedOptions[0].value
-            const gold = interaction.options._hoistedOptions[1].value
-            const silver = interaction.options._hoistedOptions[2].value
+            const userid = interaction.options._hoistedOptions[2].user.id
+            const redpill = interaction.options._hoistedOptions[0].value
+            const bluepill = interaction.options._hoistedOptions[1].value
 
             switch (args[0]) {
                 case "add":
-                    interaction.reply({ content: await addMoneyToUser(userid, { fragment: fragment, gold: gold, silver: silver }), ephemeral: true })
+                    interaction.reply({ content: await addMoneyToUser(userid, { redpill: redpill, bluepill: bluepill }), ephemeral: true })
                     break;
                 case "remove":
-                    interaction.reply({ content: await removeMoneyFromUser(userid, { fragment: fragment, gold: gold, silver: silver }), ephemeral: true })
+                    interaction.reply({ content: await removeMoneyFromUser(userid, { redpill: redpill, bluepill: bluepill }), ephemeral: true })
                     break;
                 default:
             }
