@@ -49,3 +49,17 @@ exports.removeMoneyFromUser = async (id, amount) => {
         return "Something went wrong while removing money from the user.";
     }
 }
+
+exports.hasEnoughMoney = async (id, amount) => {
+    try {
+        if (doesUserExist(id)) {
+            const money = await db.query(`SELECT redpill, bluepill FROM user WHERE userid = '${id}'`, { type: db.QueryTypes.SELECT });
+            if (money[0].redpill >= amount.redpill && money[0].bluepill >= amount.bluepill) {
+                return true;
+            }
+            return false;
+        }
+    } catch (err) {
+        logger.error(err);
+    }
+}
