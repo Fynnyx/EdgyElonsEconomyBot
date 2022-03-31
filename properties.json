@@ -1,5 +1,8 @@
 {
     "guildId": "840237524982956072",
+    "channel": {
+        "checkout": "959088932203663420"
+    },
     "status": {
         "type": "WATCHING",
         "value": "Your money!"
@@ -7,7 +10,8 @@
     "style": {
         "colors": {
             "black": "#000000",
-            "orange": "#802a00"
+            "orange": "#802a00",
+            "red": "#D41C1C"
         }
     }
 }
