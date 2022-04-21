@@ -1,3 +1,4 @@
+const { MessageEmbed } = require("discord.js")
 const client = require("../index.js");
 const data = require(`${process.cwd()}/properties.json`)
 const { getChestByName } = require("../helpers/dbChests.js");
@@ -15,11 +16,10 @@ exports.getItemOnProbability = async (items) => {
 
         for (const item of items) {
             if (result === null && percent >= 100 - item.probability - acc) {
-                console.log(item.probability, item.id);
                 result = item;
                 acc += parseFloat(item.probability)
             }
-        } 
+        }
         // console.log(result);
     }
     // console.log(percent + "% " + result);
@@ -30,36 +30,46 @@ exports.redeemItem = async (item, user) => {
     switch (item.type) {
         case "REDPILL":
             await addMoneyToUser(user.id, { redpill: item.amount, bluepill: 0 })
+            return `You got **${item.amount}** Red Pill(s)`
             break;
         case "BLUEPILL":
             await addMoneyToUser(user.id, { redpill: 0, bluepill: item.amount })
+            return `You got **${item.amount}** Blue Pill(s)`
             break;
         case "ROLE":
             const role = client.guilds.cache.get(data.guildId).roles.cache.find(role => role.id === item.value)
-            user.roles.add(role)
+            const member = await client.guilds.cache.get(data.guildId).members.fetch(user.id)
+            member.roles.add(role)
+            return `You got the **<@&${role.id}>** role`
             break;
         case "ETH":
 
             break;
         case "INVITE":
-            
+            const guild = client.guilds.cache.get(data.guildId)
+            const channel = guild.channels.cache.find(channel => channel.id === data.channels.invite)
+            const invite = await channel.createInvite({ maxAge: 0, maxUses: 1 })
+            try {
+                await user.send(invite.url)
+                return `You got the invite in your DM's`
+            } catch {
+                return "Can not send you an invite!"
+            }
             break;
         default:
             return null;
     }
 }
 
-exports.sendCheckoutMessage = async (item, user) => {
-    const checkoutChannel = client.channels.fetch(data.channels.checkout)
+exports.sendCheckoutMessage = async (item, chest,  user) => {
+    const checkoutChannel = await client.channels.fetch(data.channels.checkout)
 
     var checkoutEmbed = new MessageEmbed()
-        .setTitle(`New Item bought!`)
-        .setDescription(`${user} bought ${item}`)
+        .setTitle(`${user.username} bought a ${chest.name}`)
+        .setDescription(`<@${user.id}> got ${item.amount} ${item.name}(s)`)
         .setColor(data.style.colors.red)
         .setTimestamp()
-
-    checkoutChannel.send({ embeds: [checkoutEmbed] })
-
+    await checkoutChannel.send({ embeds: [checkoutEmbed] })
 }
 
 exports.buyItem = async (item, user) => {
@@ -76,8 +86,8 @@ exports.buyItem = async (item, user) => {
     }
     const chestItem = await this.getItemOnProbability(items)
 
-    this.redeemItem(chestItem, user)
+    await this.sendCheckoutMessage(chestItem, chest, user)
 
-    return "You bought " + chestItem.amount + " " + chestItem.name + "!"
+    return this.redeemItem(chestItem, user)
 }
 

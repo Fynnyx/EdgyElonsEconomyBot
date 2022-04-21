@@ -1,7 +1,8 @@
 {
     "guildId": "840237524982956072",
-    "channel": {
-        "checkout": "959088932203663420"
+    "channels": {
+        "checkout": "959088932203663420",
+        "invite": "959088932203663420"
     },
     "status": {
         "type": "WATCHING",

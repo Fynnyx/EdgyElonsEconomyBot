@@ -23,7 +23,7 @@ module.exports = {
      */
 
     run: async (client, interaction, args) => {
-        await interaction.deferReply()
+        await interaction.deferReply({ ephemeral: true })
         const item = args[0]
         await interaction.followUp({ content: await buyItem(item, interaction.user), ephemeral: true })
     }
