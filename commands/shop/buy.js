@@ -1,4 +1,5 @@
 const { Client, CommandInteraction, MessageEmbed } = require("discord.js")
+const { buyItem } = require("../../helpers/buy")
 const data = require(`${process.cwd()}/properties.json`)
 
 module.exports = {
@@ -22,6 +23,8 @@ module.exports = {
      */
 
     run: async (client, interaction, args) => {
-        await interaction.reply({ content: data.style.colors.red })
+        await interaction.deferReply()
+        const item = args[0]
+        await interaction.followUp({ content: await buyItem(item, interaction.user), ephemeral: true })
     }
 }

@@ -23,22 +23,26 @@ module.exports = {
 
         const allChests = await getAllChests();
 
-        allChests.forEach(async (chest) => {
-            console.log(chest);
-            const items = await getItemsByChestId('1');
-            console.log(items);
+        // allChests.forEach(async (chest) => {
+        //     console.log(chest.id);
+        //     const items = await getItemsByChestId(chest.id);
+        //     console.log(items);
+        //     var itemstring = "";
+        //     items.forEach(async (item) => {
+        //         console.log("item --------");
+        //         itemstring += `• ${item.name} - ${item.probability}\n`;
+        //     });
+        //     console.log("---------------------\n" + itemstring);
+        //     shopEmbed.addFields({ name: chest.name, value: `${chest.description}\n\n${itemstring}`, inline: true });
+        // })
+        for (var chest of allChests) {
+            const items = await getItemsByChestId(chest.id);
             var itemstring = "";
-            items.forEach(async (item) => {
-                itemstring += `• ${item.name} - ${item.probability}  ${item.type} \n`;
-            });
-            shopEmbed.addField(chest.name, `${chest.description}\n\n${itemstring}`, true);
-        })
-
-        // shopEmbed.addFields(
-        //     { name: "Chest (200 Red Pills)", value: "• Invite - 15%\n• Whitelist - 50%", inline: true },
-        //     { name: "Chest (500 Red Pills)", value: "• Invite - 25%\n• Whitelist - 75%", inline: true },
-        // )
-
+            for (var item of items) {
+                itemstring += `• ${item.name} - ${item.probability}%\n`;
+            }
+            shopEmbed.addFields({ name: chest.name, value: `${chest.description}\n\n${itemstring}`, inline: true });
+        }
         await interaction.reply({ embeds: [shopEmbed] })
     }
 }
