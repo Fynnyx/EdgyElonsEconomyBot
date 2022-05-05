@@ -17,6 +17,7 @@
         }
     },
     "shop": {
-        "durationMin": 1
+        "durationMin": 30
+
     }
 }
