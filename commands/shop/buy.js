@@ -39,7 +39,7 @@ module.exports = {
                 interaction.followUp({ content: `⛔ - This chest is not buyable!\nYou used **${item}**` })
                 return
             }
-            if (await hasEnoughMoney(interaction.user.id, { redpills: 0, bluepills: chest.bluepills })) {
+            if (!await hasEnoughMoney(interaction.user.id, { redpill: 0, bluepill: chest.bluepills })) {
                 interaction.followUp({ content: `⛔ - You don't have enough money!\nYou need **${chest.bluepills}** blue Pill/s` })
                 return
             }
@@ -50,7 +50,7 @@ module.exports = {
             }
             const result = await buyItem(item, interaction.user)
             if (result == undefined) {
-                return interaction.followUp({ content: `⛔ - Something went wrong while buying the item` })
+                return interaction.followUp({ content: `⛔ - Something went wrong while buying the item\n*- Try to unblock the bot.*` })
             }
             await interaction.followUp({ files: [`./assets/chests/${result}.gif`], ephemeral: true })
         } catch (err) {

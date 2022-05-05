@@ -4,10 +4,12 @@ const data = require(`${process.cwd()}/properties.json`)
 
 
 client.on("ready", () => {
-    try {
+    // try {
         console.info(`\x1b[33m${client.user.username}\x1b[34m, logged in\x1b[0m`)
         client.user.setActivity({ type: data.status.type, name: data.status.value })
-    } catch {
-        logger.error("Failed to start bot, \n" + err)
-    }
+        require("../handlers/jobs.js")
+        console.log("Jobs loaded");
+    // } catch (err) {
+    //     logger.error("Failed to start bot, \n" + err)
+    // }
 })

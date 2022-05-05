@@ -3,7 +3,7 @@ const client = require("../index.js");
 const data = require(`${process.cwd()}/properties.json`)
 const { getChestByName } = require("../helpers/dbChests.js");
 const { getItemsByChestId } = require("./dbItems.js");
-const { addMoneyToUser, removeMoneyFromUser } = require("./dbMoney.js");
+const { addMoneyToUser, removeMoneyFromUser, hasEnoughMoney } = require("./dbMoney.js");
 const logger = require("../handlers/logger.js");
 
 exports.getItemOnProbability = async (items) => {
@@ -69,14 +69,13 @@ exports.buyItem = async (item, user) => {
     const chest = await getChestByName(item)
     const chestItem = await this.getItemOnProbability(await getItemsByChestId(chest.id))
 
-    await this.sendCheckoutMessage(chestItem, chest, user)
     try {
-    await this.redeemItem(chestItem, user)
-    await removeMoneyFromUser(user.id, { redpill: 0, bluepill: chest.bluepills })
-    return chestItem.gif
+        await this.redeemItem(chestItem, user)
+        await removeMoneyFromUser(user.id, { redpill: 0, bluepill: chest.bluepills })
     } catch (err) {
-        console.log("Couldn't send message");
         return undefined;
     }
+    await this.sendCheckoutMessage(chestItem, chest, user)
+    return chestItem.gif
 }
 
