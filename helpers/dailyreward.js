@@ -1,16 +1,23 @@
 const db = require("../handlers/database");
 const { buyItem } = require("./buy");
 
-exports.getdailyreward = async (user) => {
+exports.getDailyReward = async (user) => {
+    const result = buyItem("Daily Chest", user)
+    db.query(`UPDATE user SET hasdailychest = 1 WHERE userid = '${user.id}'`), { type: db.QueryTypes.UPDATE };
+    return result
+}
 
-    dailychest = db.query(`SELECT hasdailychest FROM user WHERE userid = '${user}'`, { type: db.QueryTypes.SELECT });
-
-    if (dailychest == 0){
-        db.query(`UPDATE user SET hasdailychest = 1 WHERE userid = '${user}'`), { type: db.QueryTypes.UPDATE };
-        await buyItem("Daily Chest", user)
-
-    } else{
-        return "You already got your daily reward!";
+exports.hasDailyReward = async (userid) => {
+    const hasdailychest = await db.query(`SELECT hasDailyChest FROM user WHERE userid = '${userid}'`, { type: db.QueryTypes.SELECT });
+    if (hasdailychest[0].hasDailyChest == 0) {
+        return false
     }
+    return true
+}
 
+exports.resetAllDailyChests = async () => {
+    const rewardedUsers = await db.query(`SELECT * FROM user WHERE hasDailyChest = true`, { type: db.QueryTypes.SELECT })
+    for (user of rewardedUsers) {
+        await db.query(`UPDATE user SET hasDailyChest = 0 WHERE userid = ${user.userid}`, { type: db.QueryTypes.UPDATE });
+    }
 }

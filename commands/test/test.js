@@ -1,5 +1,6 @@
 const { Client, CommandInteraction, MessageEmbed } = require("discord.js")
 const { getMoneyFromUser } = require("../../helpers/dbMoney")
+const { resetAllDailyChests } = require("../../helpers/dailyreward")
 const { writeNewUser, deleteUser } = require("../../helpers/dbUser")
 const data = require(`${process.cwd()}/properties.json`)
 
@@ -16,9 +17,9 @@ module.exports = {
 
     run: async (client, interaction, args) => {
         try {
+            await resetAllDailyChests()
             // const money = await getMoneyFromUser("45177609278573772")
             // console.log(money);
-            writeNewUser("451776092785737728")
             // deleteUser("451776092785737728")
 
             await interaction.reply({ content: "money" })

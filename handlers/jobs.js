@@ -1,12 +1,12 @@
 const cron = require('node-cron');
 const { openShop, closeShop } = require('../helpers/shop.js');
+const { resetAllDailyChests } = require("../helpers/dailyreward")
 const { sleep } = require('../helpers/sleep.js');
 const data = require(`${process.cwd()}/properties.json`);
 
 
-cron.schedule("0 8 * * *", function resetDailyChest() {
-    // console.log("Running a task every day at 8:00");
-    console.log("Running a task every day at 8:00");
+cron.schedule("0 17 * * *", function resetDailyChest() {
+    await resetAllDailyChests()
 },{
     timezone: "Europe/Zurich"
 })
