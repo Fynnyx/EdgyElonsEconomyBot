@@ -1,4 +1,5 @@
 const { MessageEmbed } = require("discord.js");
+const { writeFileSync } = require("fs");
 const client = require("../index")
 const data = require(`../properties.json`)
 const variables = require("../variables.json")
@@ -17,6 +18,7 @@ exports.openShop = async () => {
 
 exports.closeShop = async () => {
     variables.isShopOpen = false;
+    writeFileSync(`${process.cwd()}/variables.json`, JSON.stringify(variables, null, 2));
     const closeShopEmbed = new MessageEmbed()
         .setTitle("Shop is now closed!")
         .setColor(data.style.colors.red)
