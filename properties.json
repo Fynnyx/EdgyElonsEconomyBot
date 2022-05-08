@@ -3,7 +3,11 @@
     "channels": {
         "checkout": "959088932203663420",
         "invite": "959088932203663420",
-        "notifications": "959088932203663420"
+        "notifications": "959088932203663420",
+        "mod": "959088932203663420"
+    },
+    "roles": {
+        "mod": "959088932203663420"
     },
     "status": {
         "type": "WATCHING",
@@ -17,6 +21,6 @@
         }
     },
     "shop": {
-        "durationMin": 1
+        "durationMin": 30
     }
 }
