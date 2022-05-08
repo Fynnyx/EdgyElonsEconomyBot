@@ -5,13 +5,13 @@ const { sleep } = require('../helpers/sleep.js');
 const data = require(`${process.cwd()}/properties.json`);
 
 
-cron.schedule("0 17 * * *", function resetDailyChest() {
+cron.schedule("0 8 * * *", async function resetDailyChest() {
     await resetAllDailyChests()
 },{
     timezone: "Europe/Zurich"
 })
 
-cron.schedule("0 13 * * *", async function shop() {
+cron.schedule("0 8 * * *", async function shop() {
     await openShop();
     await sleep(data.shop.durationMin * 60);
     await closeShop();
