@@ -53,9 +53,7 @@ exports.removeMoneyFromUser = async (id, amount) => {
 exports.hasEnoughMoney = async (id, amount) => {
     try {
         if (await doesUserExist(id)) {
-            console.log(amount);
             const money = await db.query(`SELECT redpill, bluepill FROM user WHERE userid = '${id}'`, { type: db.QueryTypes.SELECT });
-            console.log(money[0].redpill >= amount.redpill && money[0].bluepill >= amount.bluepill);
             if (money[0].redpill >= amount.redpill && money[0].bluepill >= amount.bluepill) {
                 return true;
             }

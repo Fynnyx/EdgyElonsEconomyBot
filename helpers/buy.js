@@ -20,9 +20,7 @@ exports.getItemOnProbability = async (items) => {
                 acc += parseFloat(item.probability)
             }
         }
-        // console.log(result);
     }
-    // console.log(percent + "% " + result);
     return result;
 }
 
