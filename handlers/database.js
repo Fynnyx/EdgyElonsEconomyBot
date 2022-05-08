@@ -1,7 +1,9 @@
 const { Sequelize, Model, DataTypes } = require('sequelize');
 const logger = require('./logger');
 
-const db = new Sequelize(process.env.DBURI);
+const db = new Sequelize(process.env.DBURI, {
+    logging: false,
+});
 
 try {
     db.authenticate()
