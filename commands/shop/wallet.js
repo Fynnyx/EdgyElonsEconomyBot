@@ -1,4 +1,5 @@
 const { Client, CommandInteraction, MessageEmbed } = require("discord.js")
+const logger = require("../../handlers/logger")
 const data = require(`${process.cwd()}/properties.json`)
 
 const { getMoneyFromUser } = require("../../helpers/dbMoney")
@@ -24,27 +25,28 @@ module.exports = {
      */
 
     run: async (client, interaction, args) => {
+        try {
 
-        var user
-        var money
-        var title
-        var desc
+            var user
+            var money
+            var title
+            var desc
 
-        if (args[0] === undefined) {
-            user = interaction.user
-            money = await getMoneyFromUser(user.id)
-            title = `- Your Wallet -`
-            desc = `With your money you can buy items in the shop.\n**use **${"`"}/shop${"`"}`
-        } else {
-            user = await client.users.fetch(args[0])
-            money = await getMoneyFromUser(args[0])
-            title = `- Wallet from ${user.tag} -`
-            desc = `With your money you can buy items in the shop.\n**use **${"`"}/shop${"`"}`
+            if (args[0] === undefined) {
+                user = interaction.user
+                money = await getMoneyFromUser(user.id)
+                title = `- Your Wallet -`
+                desc = `With your money you can buy items in the shop.\n**use **${"`"}/shop${"`"}`
+            } else {
+                user = await client.users.fetch(args[0])
+                money = await getMoneyFromUser(args[0])
+                title = `- Wallet from ${user.tag} -`
+                desc = `With your money you can buy items in the shop.\n**use **${"`"}/shop${"`"}`
 
 
-            
-        }
-        const walletEmbed = new MessageEmbed()
+
+            }
+            const walletEmbed = new MessageEmbed()
                 .setTitle(title)
                 .setDescription(desc)
                 .setColor(data.style.colors.red)
@@ -61,6 +63,10 @@ module.exports = {
                         inline: true
                     }
                 ])
-        await interaction.reply({ embeds: [walletEmbed] })
+            await interaction.reply({ embeds: [walletEmbed] })
+        } catch (error) {
+            logger.error(error)
+            interaction.reply({ content: "An error occured!", ephemeral: true })
+        }
     }
 }

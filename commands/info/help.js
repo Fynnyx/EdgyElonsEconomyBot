@@ -29,6 +29,7 @@ module.exports = {
             await interaction.reply({ embeds: [helpEmbed] })
         } catch (error) {
             logger.error(error)
+            interaction.reply({ content: "An error occured!", ephemeral: true })
         }
     }
 }

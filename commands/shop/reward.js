@@ -1,7 +1,6 @@
 const { Client, CommandInteraction, MessageEmbed } = require("discord.js")
 const { getDailyReward, hasDailyReward } = require("../../helpers/dailyreward")
 const logger = require("../../handlers/logger")
-const data = require(`${process.cwd()}/properties.json`)
 
 module.exports = {
     name: "reward",
@@ -22,7 +21,7 @@ module.exports = {
      */
 
     run: async (client, interaction, args) => {
-        // try {
+        try {
             switch (args[0]) {
                 case "daily":
                     await interaction.deferReply({ephemeral: true})
@@ -39,9 +38,9 @@ module.exports = {
                 default:
                     interaction.reply({content: "⛔ - This reward cant be found."})
             }
-        // } catch (err) {
-        //     await interaction.followUp({ content: "Something went wrong while buying the item.", ephemeral: true })
-        //     logger.error(err)
-        // }
+        } catch (error) {
+            logger.error(error)
+            interaction.reply({ content: "An error occured!", ephemeral: true })
+        }
     }
 }

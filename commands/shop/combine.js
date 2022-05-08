@@ -2,7 +2,7 @@ const { Client, CommandInteraction, MessageEmbed } = require("discord.js")
 const logger = require("../../handlers/logger")
 const data = require(`${process.cwd()}/properties.json`)
 const { addMoneyToUser, removeMoneyFromUser } = require("../../helpers/dbMoney")
-const { getMoneyFromUser, hasEnoughMoney } = require("../../helpers/dbMoney")
+const { hasEnoughMoney } = require("../../helpers/dbMoney")
 
 const option = [
     {
@@ -68,8 +68,9 @@ module.exports = {
                     return interaction.reply({ content: `Your used pill type is not valid\n**You used:** ${args[0]}.`, ephemeral: true })
 
             }
-        } catch (e) {
-            logger.error(e)
+        } catch (error) {
+            logger.error(error)
+            interaction.reply({ content: "An error occured!", ephemeral: true })
         }
     }
 }

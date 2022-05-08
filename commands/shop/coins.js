@@ -1,7 +1,6 @@
-const { Client, CommandInteraction, MessageEmbed } = require("discord.js")
+const { Client, CommandInteraction } = require("discord.js")
 const logger = require("../../handlers/logger")
 const { addMoneyToUser, removeMoneyFromUser } = require("../../helpers/dbMoney")
-const data = require(`${process.cwd()}/properties.json`)
 
 const options = [
     {
@@ -65,8 +64,9 @@ module.exports = {
                     break;
                 default:
             }
-        } catch (err) {
-            logger.error(err);
+        } catch (error) {
+            logger.error(error)
+            interaction.reply({ content: "An error occured!", ephemeral: true })
         }
     }
 }

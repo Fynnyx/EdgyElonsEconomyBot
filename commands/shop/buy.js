@@ -1,10 +1,9 @@
-const { Client, CommandInteraction, MessageEmbed } = require("discord.js")
+const { Client, CommandInteraction } = require("discord.js")
 const { buyItem } = require("../../helpers/buy")
 const { getChestByName } = require("../../helpers/dbChests")
 const { getItemsByChestId } = require("../../helpers/dbItems")
 const logger = require("../../handlers/logger")
 const { hasEnoughMoney } = require("../../helpers/dbMoney")
-const data = require(`${process.cwd()}/properties.json`)
 const variables = require("../../variables.json")
 
 module.exports = {

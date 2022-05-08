@@ -3,8 +3,7 @@ const client = require("../index.js");
 const data = require(`${process.cwd()}/properties.json`)
 const { getChestByName } = require("../helpers/dbChests.js");
 const { getItemsByChestId } = require("./dbItems.js");
-const { addMoneyToUser, removeMoneyFromUser, hasEnoughMoney } = require("./dbMoney.js");
-const logger = require("../handlers/logger.js");
+const { addMoneyToUser, removeMoneyFromUser } = require("./dbMoney.js");
 
 exports.getItemOnProbability = async (items) => {
     var percent
