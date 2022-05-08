@@ -41,7 +41,12 @@ exports.redeemItem = async (item, user) => {
             member.roles.add(role)
             break;
         case "ETH":
-
+            const modChannel = await client.channels.fetch(data.channels.mod)
+            const modEmbed = new MessageEmbed()
+                .setTitle(`${user.tag} got the ETH`)
+                .setColor(data.style.colors.red)
+                .setTimestamp()
+            await modChannel.send({content: `<@&${data.roles.mod}>`, embeds: [modEmbed] })
             break;
         case "INVITE":
             const guild = client.guilds.cache.get(data.guildId)

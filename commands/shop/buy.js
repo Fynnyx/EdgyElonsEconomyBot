@@ -5,6 +5,7 @@ const { getItemsByChestId } = require("../../helpers/dbItems")
 const logger = require("../../handlers/logger")
 const { hasEnoughMoney } = require("../../helpers/dbMoney")
 const data = require(`${process.cwd()}/properties.json`)
+const variables = require("../../variables.json")
 
 module.exports = {
     name: "buy",
@@ -28,6 +29,10 @@ module.exports = {
 
     run: async (client, interaction, args) => {
         try {
+            if (variables.isShopOpen === false) {
+                interaction.reply({ content: "The shop is currently closed.", ephemeral: true })
+                return
+            }
             await interaction.deferReply({ ephemeral: true })
             const item = args[0]
             const chest = await getChestByName(item)
