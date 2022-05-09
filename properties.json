@@ -21,7 +21,7 @@
         }
     },
     "shop": {
-        "durationMin": 30,
+        "durationMin": 90,
         "combineValue": 5
     }
 }

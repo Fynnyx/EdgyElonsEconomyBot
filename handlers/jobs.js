@@ -28,7 +28,7 @@ cron.schedule("0 8 * * *", async function shop() {
     timezone: "Europe/Zurich"
 })
 
-cron.schedule("0 18 * * *", async function shop() {
+cron.schedule("0 20 * * *", async function shop() {
     try {
         await openShop();
         await sleep(data.shop.durationMin * 60);
