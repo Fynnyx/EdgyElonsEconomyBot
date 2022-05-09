@@ -1,5 +1,6 @@
 const { Client, CommandInteraction, MessageEmbed } = require("discord.js")
 const { getDailyReward, hasDailyReward } = require("../../helpers/dailyreward")
+const { doesUserExist } = require("../../helpers/dbUser")
 const logger = require("../../handlers/logger")
 
 module.exports = {
@@ -25,6 +26,9 @@ module.exports = {
             switch (args[0]) {
                 case "daily":
                     await interaction.deferReply({ephemeral: true})
+                    if (!await doesUserExist(interaction.message.author.id)) {
+                        await writeNewUser(interaction.message.author.id)
+                    }
                     if (await hasDailyReward(interaction.user.id)) {
                         return interaction.followUp({content: "You already got your daily reward.", ephemeral: true})
                     }
