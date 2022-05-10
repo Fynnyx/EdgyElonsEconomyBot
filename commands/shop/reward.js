@@ -39,11 +39,11 @@ module.exports = {
                     await interaction.followUp({ files: [`./assets/chests/${result}.gif`], ephemeral: true })
                     break;
                 default:
-                    interaction.reply({content: "⛔ - This reward cant be found."})
+                    interaction.followUp({content: "⛔ - This reward cant be found."})
             }
         } catch (error) {
             logger.error(error)
-            interaction.reply({ content: "An error occured!", ephemeral: true })
+            interaction.followUp({ content: "An error occured!", ephemeral: true })
         }
     }
 }

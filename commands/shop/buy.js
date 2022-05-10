@@ -1,10 +1,10 @@
 const { Client, CommandInteraction } = require("discord.js")
+const { readFileSync } = require("fs")
 const { buyItem } = require("../../helpers/buy")
 const { getChestByName } = require("../../helpers/dbChests")
 const { getItemsByChestId } = require("../../helpers/dbItems")
 const logger = require("../../handlers/logger")
 const { hasEnoughMoney } = require("../../helpers/dbMoney")
-const variables = require("../../variables.json")
 
 module.exports = {
     name: "buy",
@@ -29,9 +29,10 @@ module.exports = {
     run: async (client, interaction, args) => {
         try {
             await interaction.deferReply({ ephemeral: true })
-            variables = require("../../variables.json")
+            const rawVariables = readFileSync(`${process.cwd()}/variables.json`)
+            const variables = JSON.parse(rawVariables)
             if (variables.isShopOpen === false) {
-                interaction.reply({ content: "The shop is currently closed.", ephemeral: true })
+                interaction.followUp({ content: "The shop is currently closed.", ephemeral: true })
                 return
             }
             const item = args[0]
@@ -59,8 +60,8 @@ module.exports = {
             }
             await interaction.followUp({ files: [`./assets/chests/${result}.gif`], ephemeral: true })
         } catch (err) {
-            await interaction.followUp({ content: "Something went wrong while buying the item.", ephemeral: true })
             logger.error(err)
+            await interaction.followUp({ content: "Something went wrong while buying the item.", ephemeral: true })
         }
     }
 }
