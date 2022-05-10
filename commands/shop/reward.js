@@ -1,6 +1,6 @@
 const { Client, CommandInteraction, MessageEmbed } = require("discord.js")
 const { getDailyReward, hasDailyReward } = require("../../helpers/dailyreward")
-const { doesUserExist } = require("../../helpers/dbUser")
+const { doesUserExist, writeNewUser } = require("../../helpers/dbUser")
 const logger = require("../../handlers/logger")
 
 module.exports = {
