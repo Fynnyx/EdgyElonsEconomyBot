@@ -26,8 +26,8 @@ module.exports = {
             switch (args[0]) {
                 case "daily":
                     await interaction.deferReply({ephemeral: true})
-                    if (!await doesUserExist(interaction.message.author.id)) {
-                        await writeNewUser(interaction.message.author.id)
+                    if (!await doesUserExist(interaction.user.id)) {
+                        await writeNewUser(interaction.user.id)
                     }
                     if (await hasDailyReward(interaction.user.id)) {
                         return interaction.followUp({content: "You already got your daily reward.", ephemeral: true})
