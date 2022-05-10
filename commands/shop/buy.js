@@ -28,12 +28,12 @@ module.exports = {
 
     run: async (client, interaction, args) => {
         try {
+            await interaction.deferReply({ ephemeral: true })
             variables = require("../../variables.json")
             if (variables.isShopOpen === false) {
                 interaction.reply({ content: "The shop is currently closed.", ephemeral: true })
                 return
             }
-            await interaction.deferReply({ ephemeral: true })
             const item = args[0]
             const chest = await getChestByName(item)
             if (chest === undefined || chest === []) {
