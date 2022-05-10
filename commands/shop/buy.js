@@ -28,6 +28,7 @@ module.exports = {
 
     run: async (client, interaction, args) => {
         try {
+            variables = require("../../variables.json")
             if (variables.isShopOpen === false) {
                 interaction.reply({ content: "The shop is currently closed.", ephemeral: true })
                 return
