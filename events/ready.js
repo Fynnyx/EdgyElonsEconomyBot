@@ -1,4 +1,5 @@
 const client = require("../index.js")
+const { writeFileSync } = require("fs")
 const logger = require("../handlers/logger.js")
 const data = require(`${process.cwd()}/properties.json`)
 const variables = require("../variables.json")
