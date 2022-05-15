@@ -1,10 +1,15 @@
 const db = require("../handlers/database");
+const logger = require("../handlers/logger");
 const { buyItem } = require("./buy");
 
 exports.getDailyReward = async (user) => {
-    const result = buyItem("Daily Chest", user)
-    db.query(`UPDATE user SET hasdailychest = 1 WHERE userid = '${user.id}'`), { type: db.QueryTypes.UPDATE };
-    return result
+    try {
+        const result = await buyItem("Daily Chest", user)
+        await db.query(`UPDATE user SET hasdailychest = 1 WHERE userid = '${user.id}'`), { type: db.QueryTypes.UPDATE };
+        return result
+    } catch (error) {
+        logger.error(error)
+    }
 }
 
 exports.hasDailyReward = async (userid) => {
