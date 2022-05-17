@@ -28,7 +28,7 @@ module.exports = {
                 const items = await getItemsByChestId(chest.id);
                 var itemstring = "";
                 for (var item of items) {
-                    itemstring += `• ${item.name} - ${item.probability}%\n`;
+                    itemstring += `• ${(item.amount > 1 ? item.amount : "")} ${item.name} - ${item.probability}%\n`;
                 }
                 shopEmbed.addFields({ name: `${chest.name} - ${chest.bluepills} BPs`, value: `${chest.description}\n\n${itemstring}`, inline: true });
             }
