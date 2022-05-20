@@ -5,7 +5,10 @@ const { buyItem } = require("./buy");
 exports.getDailyReward = async (user) => {
     try {
         const result = await buyItem("Daily Chest", user)
-        await db.query(`UPDATE user SET hasdailychest = 1 WHERE userid = '${user.id}'`), { type: db.QueryTypes.UPDATE };
+        if (result == undefined) {
+            await db.query(`UPDATE user SET hasdailychest = 1 WHERE userid = '${user.id}'`), { type: db.QueryTypes.UPDATE };
+            return undefined
+        }
         return result
     } catch (error) {
         logger.error(error)
