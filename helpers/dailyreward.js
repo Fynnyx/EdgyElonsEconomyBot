@@ -7,7 +7,6 @@ exports.getDailyReward = async (user) => {
         const result = await buyItem("Daily Chest", user)
         if (result == undefined) {
             await db.query(`UPDATE user SET hasdailychest = 1 WHERE userid = '${user.id}'`), { type: db.QueryTypes.UPDATE };
-            return undefined
         }
         return result
     } catch (error) {
